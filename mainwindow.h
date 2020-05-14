@@ -45,6 +45,7 @@ private:
 
     QMediaPlayer* player = new QMediaPlayer;
     QString path = "";
+    double min = 0;
 
     void selezioneFile();
 };

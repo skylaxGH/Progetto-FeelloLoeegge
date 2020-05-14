@@ -206,24 +206,23 @@ void MainWindow::on_progressSlider_sliderMoved(int position) {
 }
 
 void MainWindow::on_positionChanged(qint64 position) {
-    //double min = 0, sec = 0;
+    double sec = 0;
 
     ui->progressSlider->setValue(position);
 
-    /*ui->progressSlider->setMaximum(position);
-
     sec = static_cast<double>(position) / 1000;
 
-    if(int(sec) % 60 == 0) {
-        min = sec / 60;
-        ui->timeLabel->setText(QString::number(min) + ":00");
-    }
+    sec ++;
 
-    else {
-        min = sec / 60;
-        sec = (int(sec) % 60) + 1;
-        ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(sec));
-    }*/
+        if (int (sec) - (min * 60) == 60) {
+            min++;
+            ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
+   }
+
+        else{
+
+            ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
+        }
 }
 
 void MainWindow::on_durationChanged(qint64 position) {
