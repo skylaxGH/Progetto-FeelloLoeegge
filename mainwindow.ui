@@ -39,7 +39,32 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QListView {
+	background-color: #202020;
+    border-right: 1.2px solid rgb(255, 77, 0);
+    color: white;
+	font-size: 20px;
+}
+
+QListView::item:alternate {
+    background: #EEEEEE;
+}
+
+QListView::item:selected {
+    border: 1px solid #6a6ea9;
+}
+
+QListView::item:selected:!active {
+     background:
+}
+
+QListView::item:selected:active {
+     background:
+}
+
+QListView::item:hover {
+     background:
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -215,6 +240,28 @@ border: 0.6px solid white;</string>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QSlider::groove:horizontal {
+	height: 10px;
+	border: 1px solid #999999;
+}
+
+QSlider::handle:horizontal {
+     width: 10px;
+     background: rgb(255, 77, 0);
+     margin: -5px 0;
+     border-radius: 5px;
+     border: 0.5px solid;
+ }
+
+QSlider::sub-page:horizontal {
+      background: rgb(255, 77, 0);
+}
+
+QSlider::add-page:horizontal {
+      background: white;
+}</string>
+    </property>
     <property name="maximum">
      <number>100</number>
     </property>
@@ -231,6 +278,28 @@ border: 0.6px solid white;</string>
       <height>16</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QSlider::groove:horizontal {
+	height: 7px;
+	border: 1px solid #999999;
+}
+
+QSlider::handle:horizontal {
+     width: 9px;
+     background: rgb(255, 77, 0);
+     margin: -5px 0;
+     border-radius: 5px;
+     border: 0.5px solid;
+ }
+
+QSlider::sub-page:horizontal {
+      background: rgb(255, 77, 0);
+}
+
+QSlider::add-page:horizontal {
+      background: white;
+}</string>
+    </property>
     <property name="maximum">
      <number>100</number>
     </property>
@@ -243,7 +312,7 @@ border: 0.6px solid white;</string>
      <rect>
       <x>750</x>
       <y>491</y>
-      <width>51</width>
+      <width>31</width>
       <height>16</height>
      </rect>
     </property>
@@ -264,9 +333,9 @@ border: 0.6px solid white;</string>
    <widget class="QLabel" name="timeLabel">
     <property name="geometry">
      <rect>
-      <x>265</x>
+      <x>280</x>
       <y>491</y>
-      <width>51</width>
+      <width>41</width>
       <height>16</height>
      </rect>
     </property>
@@ -281,7 +350,7 @@ border: 0.6px solid white;</string>
      <string notr="true">color: white;</string>
     </property>
     <property name="text">
-     <string/>
+     <string>0:00</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnCreaplaylist">
@@ -316,6 +385,19 @@ border: 0.6px solid white;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tblPC">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>70</y>
+      <width>521</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
     </property>
    </widget>
   </widget>

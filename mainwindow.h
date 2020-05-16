@@ -38,14 +38,25 @@ private slots:
 
     void updateName(QString name);
 
+    void on_btnAggiungip_clicked();
+
+    void on_actionApri_un_file_triggered();
+
+    void on_actionStart_triggered();
+
+    void on_actionStop_triggered();
+
+    void on_actionPausa_triggered();
+
 private:
     Ui::MainWindow *ui;
-    nameRequest *nRequest;
-    bool slider = false;
+    nameRequest *nRequest;  //Dichiaro un puntatore a nameRequest per chiamare la seconda finestra dalla prima
+    bool slider = false;    //Bool per la visibilità/non visibilità dello sliderVolume
 
-    QMediaPlayer* player = new QMediaPlayer;
-    QString path = "";
-    double min = 0;
+    QMediaPlayer* player = new QMediaPlayer; //Dichiaro un puntatore a QMediaPlayer per la riproduzione audio
+    QString path = "";      //Dichiaro una variabile QString per il salvataggio della path del file selezionato da utente
+    double min = 0;         //Dichiaro una variabile double per il conteggio dei minuti totali/di riproduzione della traccia
+    QString playlistFile = "/Playlist.txt";
 
     void selezioneFile();
 };

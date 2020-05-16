@@ -25,10 +25,16 @@ void nameRequest::on_buttonBox_accepted()
         }
     }
 
-    if(ctr == true || ui->namePlaylist->text() == "") {
+    if(ctr == true || ui->namePlaylist->text() == "" || ui->namePlaylist->text().contains('.') ||
+       ui->namePlaylist->text().contains('\\') || ui->namePlaylist->text().contains('/') ||
+       ui->namePlaylist->text().contains(':') || ui->namePlaylist->text().contains('*') ||
+       ui->namePlaylist->text().contains('|') || ui->namePlaylist->text().contains('?') ||
+       ui->namePlaylist->text().contains('<') || ui->namePlaylist->text().contains('>') ||
+       ui->namePlaylist->text().contains('"')
+      ) {
         QMessageBox error;
         error.setWindowTitle("Errore");
-        error.setText("Hai inserito un nome di playlist gia' esistente oppure vuoto");
+        error.setText("Hai inserito un nome di playlist errato, gia' esistente oppure vuoto");
         error.exec();
     }
 

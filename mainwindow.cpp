@@ -6,6 +6,9 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QDir>
+#include <QStandardPaths>
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,81 +20,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     player->setMedia(nullptr);
 
+    playlistFile = PROJECT_PATH + playlistFile;
+    QFile filePlaylist(playlistFile);
+    filePlaylist.open(QIODevice::WriteOnly);
+    filePlaylist.close();
+
     this->setFixedSize(this->size());  //La grandezza della finestra non può essere modificata (dimensione fissa)
 
     ui->volumeSlider->setVisible(false);                            //Lo slider del volume di default non è visibile
-    ui->volumeSlider->setStyleSheet("QSlider::groove:horizontal {"  //Modifico la stylesheet dello slider del volume
-                                                                    //per renderlo un po' più bello (quello di Windows
-                                       "height: 7px;"               //di default è bruttissimo)
-                                       "border: 1px solid #999999;"
-
-                                    "}"
-
-                                    "QSlider::handle:horizontal {"
-                                       "width: 9px;"
-                                       "background: rgb(255, 77, 0);"
-                                       "margin: -5px 0;"
-                                       "border-radius: 5px;"
-                                       "border: 0.5px solid;"
-
-                                    "}"
-
-                                    "QSlider::sub-page:horizontal {"
-                                       "background: rgb(255, 77, 0);"
-                                    "}"
-
-                                    "QSlider::add-page:horizontal {"
-                                       "background: white;"
-                                    "}");
-
-    ui->progressSlider->setStyleSheet("QSlider::groove:horizontal {"      //Modifico la style sheet anche della progress bar/slider
-                                        "height: 10px;"
-                                        "border: 1px solid #999999;"
-                                      "}"
-
-                                      "QSlider::handle:horizontal {"
-                                         "width: 10px;"
-                                         "background: rgb(255, 77, 0);"
-                                         "margin: -5px 0;"
-                                         "border-radius: 5px;"
-                                         "border: 0.5px solid;"
-                                      "}"
-
-                                      "QSlider::add-page:horizontal {"
-                                         "background: white;"
-                                      "}"
-
-                                      "QSlider::sub-page:horizontal {"
-                                         "background: rgb(255, 77, 0);"
-                                      "}");
-
-    ui->listaPlaylist->setStyleSheet("QListView {"                      //Modifico la style sheet della listWidget delle playlist
-                                        "show-decoration-selected: 1;"
-                                        "background-color: #202020;"
-                                        "border-right: 1.2px solid rgb(255, 77, 0);"
-                                        "color: white;"
-                                     "}"
-
-                                     "QListView::item:alternate {"
-                                        "background: #EEEEEE;"
-                                     "}"
-
-                                     "QListView::item:selected {"
-                                        "border: 1px solid #6a6ea9;"
-                                     "}"
-
-                                     "QListView::item:selected:!active {"
-                                        "background:"
-                                     "}"
-
-                                     "QListView::item:selected:active {"
-                                        "background:"
-                                     "}"
-
-                                     "QListView::item:hover {"
-                                        "background:"
-
-                                     "}");
 }
 
 MainWindow::~MainWindow()
@@ -100,19 +36,16 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::selezioneFile() {
+    QDir pathDir;  //La variabile pathDir serve per l'utilizzo della funzione toNativeSeparators
+
     path = QFileDialog::getOpenFileName(this, "Apri un file", "C://", "*.mp3 *.mp4 *.wav *.wma *.aac *.m4a");  //Apro una finestra di comunicazione con
                                                                                                                //l'utente per l'apertura del file
+    path = pathDir.toNativeSeparators(path);   //Converto la path Windows ottenuta per la traccia audio in una path Unix
+                                               //per lavorare con QT
 
-    for(int i = 0; i < path.length() - 1; i++){   //Sostituisco gli slash con i backslash perchè
-                                                  //QT non riconosce gli indirizzi di windows in quanto
-        if(path[i] == '/') path[i] = '\\' ;       //usa gli indirizzi UNIX
-    }
-
-    QFile songPath(path);
-    QFileInfo songInfo(songPath.fileName());
-    QString songName(songInfo.fileName());
-
-    songName.replace(".mp3", "");
+    QFile songPath(path);                      //Prendo la path della traccia audio in una QFile per usare filename()
+    QFileInfo songInfo(songPath.fileName());   //Salvo in una QFileInfo il filename di songpath (quindi solo il nome della canzone)
+    QString songName(songInfo.fileName());     //Salvo il nome ottenuto in una string per mostrarla all'utente
 
     ui->songName->setText(songName);
 
@@ -137,11 +70,11 @@ void MainWindow::on_btnRiproduci_clicked() {
     if(path == "") {
         box.setWindowTitle("Errore");
         box.setText("Non hai selezionato nessuna traccia audio, vuoi selezionarne una?");
-        box.addButton(QMessageBox::Open);
+        box.addButton("Apri", QMessageBox::AcceptRole);
         box.addButton(QMessageBox::No);
-        box.exec();
+        int ret = box.exec();
 
-        if(box.Open) selezioneFile();
+        if(ret == QMessageBox::AcceptRole) selezioneFile();
     }
 
     /*else if(path.length() > 0) {
@@ -183,8 +116,12 @@ void MainWindow::on_btnStop_clicked() {
     else {
         player->stop();             //Negli altri casi stoppo la riproduzione, do valore nullptr a setMedia per segnalare che non è disponibile
         player->setMedia(nullptr);  //nessun file audio
+
         path = "";
         ui->songName->clear();      //Pulisco il file songName così posso prendere in input il nome del file di un'altra canzone
+        ui->timeLabel->setText("0:00");
+
+
         disconnect(ui->volumeSlider, SIGNAL(valueChanged(int)), player, SLOT(setVolume(int)));     //Disconnetto i vari slot di segnale tra stream audio e slider/progress bar
         disconnect(player, &QMediaPlayer::positionChanged, this, &MainWindow::on_positionChanged);
         disconnect(player, &QMediaPlayer::durationChanged, this, &MainWindow::on_durationChanged);
@@ -206,21 +143,20 @@ void MainWindow::on_progressSlider_sliderMoved(int position) {
 }
 
 void MainWindow::on_positionChanged(qint64 position) {
-    double sec = 0;
+    double sec;
 
     ui->progressSlider->setValue(position);
 
     sec = static_cast<double>(position) / 1000;
 
-    sec ++;
+    sec++;
 
         if (int (sec) - (min * 60) == 60) {
             min++;
             ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
-   }
+        }
 
-        else{
-
+        else {
             ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
         }
 }
@@ -245,10 +181,63 @@ void MainWindow::on_durationChanged(qint64 position) {
 
 void MainWindow::on_btnCreaplaylist_clicked()
 {
-    nRequest->setModal(true);
+    nRequest->setModal(true);   //Imposto la finestra parente non cliccabile finchè la nuova finestra non finisce il suo corso
     nRequest->show();
 }
 
 void MainWindow::updateName(QString name) {
-    ui->listaPlaylist->addItem(name);
+    ui->listaPlaylist->addItem(name);   //Aggiungo la playlist alla lista
+
+    QDir dir(PROJECT_PATH + name);      //PROJECT_PATH costante che contiene la path del progetto (guardare .pro)
+    if (!dir.exists()) dir.mkpath("."); //Se la cartella non esiste, la creo (. si riferisce alla path attualmente puntata da dir)
+
+    QString plDir = PROJECT_PATH + name;
+    QFile filePlaylist(playlistFile);
+    filePlaylist.open(QIODevice::Append);
+
+    QTextStream stream(&filePlaylist);
+    stream << plDir << endl;
+
+    filePlaylist.close();
+
+    QString mod = "/" + name + ".txt";  //Per costruire la path assoluta per il file di testo aggiungo il nome del file più lo slash ed il .txt
+
+    QString playlistName = PROJECT_PATH + name + mod;
+    QFile textPlaylist(playlistName);
+    textPlaylist.open(QIODevice::WriteOnly);
+    textPlaylist.close();
+}
+
+void MainWindow::on_btnAggiungip_clicked()
+{
+    if(ui->listaPlaylist->currentRow() - 1 || ui->listaPlaylist->count() == 0) {
+        QMessageBox box;
+        box.setWindowTitle("Errore");
+        box.setText("Non hai selezionato nessuna playlist o non ne hai creata una");
+        box.exec();
+    }
+
+    else {
+
+    }
+}
+
+
+
+//----------------AZIONI--------------------
+
+void MainWindow::on_actionApri_un_file_triggered() { //Imposto tutte le azioni della Menu Bar collegandole alle funzioni già create
+    MainWindow::on_btnRiproduci_clicked();
+}
+
+void MainWindow::on_actionStart_triggered() {
+    MainWindow::on_btnRiproduci_clicked();
+}
+
+void MainWindow::on_actionStop_triggered() {
+    MainWindow::on_btnStop_clicked();
+}
+
+void MainWindow::on_actionPausa_triggered() {
+    MainWindow::on_btnPausa_clicked();
 }
