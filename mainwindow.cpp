@@ -21,8 +21,23 @@ MainWindow::MainWindow(QWidget *parent)
     player->setMedia(nullptr);
 
     playlistFile = PROJECT_PATH + playlistFile;
+
     QFile filePlaylist(playlistFile);
-    filePlaylist.open(QIODevice::WriteOnly);
+    filePlaylist.open(QIODevice::ReadWrite);
+    QTextStream stream(&filePlaylist);
+
+    QString empty = "";
+
+    while (!stream.atEnd()) {
+        QString line = stream.readLine();
+
+        QFile playlistPath(line);
+        QFileInfo playlistInfo(playlistPath.fileName());
+        QString playlistName(playlistInfo.fileName());
+
+        ui->listaPlaylist->addItem(playlistName);
+    }
+
     filePlaylist.close();
 
     this->setFixedSize(this->size());  //La grandezza della finestra non può essere modificata (dimensione fissa)
@@ -151,24 +166,19 @@ void MainWindow::on_positionChanged(qint64 position) {
 
     sec++;
 
+    if (int (sec) - (min * 60) == 60) {
+        min++;
+        ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
+    }
 
-        if (int (sec) - (min * 60) == 60) {
-
-            min++;
-
+    else {
+        if(int (sec) - (min * 60) < 0){
+            min--;
             ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
         }
 
-        else {
-
-            if(int (sec) - (min * 60) < 0){
-
-                min--;
-                ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
-            }
-
-            ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
-        }
+        ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
+    }
 }
 
 void MainWindow::on_durationChanged(qint64 position) {
@@ -220,7 +230,7 @@ void MainWindow::updateName(QString name) {
 
 void MainWindow::on_btnAggiungip_clicked()
 {
-    if(ui->listaPlaylist->currentRow() - 1 || ui->listaPlaylist->count() == 0) {
+    if(ui->listaPlaylist->currentRow() == -1 || ui->listaPlaylist->count() == 0) {
         QMessageBox box;
         box.setWindowTitle("Errore");
         box.setText("Non hai selezionato nessuna playlist o non ne hai creata una");
@@ -228,6 +238,42 @@ void MainWindow::on_btnAggiungip_clicked()
     }
 
     else {
+        QString playlistPath, samestr = ui->listaPlaylist->currentItem()->text();
+        playlistPath = PROJECT_PATH + samestr;
+
+        QFile songFile(path);
+        QFileInfo songInfo(songFile.fileName());
+        QString songName(songInfo.fileName());
+
+        songFile.rename(playlistPath + "/" + songName);
+
+        playlistPath = playlistPath + "/" + samestr + ".txt";
+
+        QFile songText(playlistPath);
+        bool ctr = false;
+        if (songText.open(QIODevice::ReadOnly)) {
+
+            QTextStream stream(&songText);
+            while (!stream.atEnd()) {
+                QString line = stream.readLine();
+                if(playlistPath + "/" + songName == line) ctr = true;
+            }
+            songText.close();
+        }
+
+        if(ctr == true) {
+            QMessageBox box;
+            box.setWindowTitle("Errore");
+            box.setText("Canzone già presente nella playlist");
+            box.exec();
+        }
+
+        else {
+            songText.open(QIODevice::Append);
+            QTextStream stream(&songText);
+            stream << playlistPath + "/" + songName << endl;
+            songText.close();
+        }
 
     }
 }
