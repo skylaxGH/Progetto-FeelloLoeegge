@@ -59,6 +59,6 @@ private:
     int row = 1;
     QString playlistFile = "/Playlist.txt";
 
-    void selezioneFile();
+    void selezioneFile(int n);
 };
 #endif // MAINWINDOW_H

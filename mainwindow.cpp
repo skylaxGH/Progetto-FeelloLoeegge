@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QCoreApplication>
-
+#include <QMediaPlaylist>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -52,7 +52,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::selezioneFile() {
+void MainWindow::selezioneFile(int n) {
     QDir pathDir;  //La variabile pathDir serve per l'utilizzo della funzione toNativeSeparators
 
     path = QFileDialog::getOpenFileName(this, "Apri un file", "C://", "*.mp3 *.mp4 *.wav *.wma *.aac *.m4a");  //Apro una finestra di comunicazione con
@@ -64,9 +64,22 @@ void MainWindow::selezioneFile() {
     QFileInfo songInfo(songPath.fileName());   //Salvo in una QFileInfo il filename di songpath (quindi solo il nome della canzone)
     QString songName(songInfo.fileName());     //Salvo il nome ottenuto in una string per mostrarla all'utente
 
-    ui->songName->setText(songName);
+    QMediaPlaylist *coda = new QMediaPlaylist;
 
-    player->setMedia(QUrl::fromLocalFile(path));  //Imposto come file per la riproduzione il file scelto da utente per indirizzo
+    if(n == 0){
+
+        coda->addMedia(QUrl::fromLocalFile(path));
+        coda->setCurrentIndex(1);
+
+        player->setPlaylist(coda);
+
+    }
+
+    else{
+
+        coda->addMedia(QUrl::fromLocalFile(path));
+        coda->setCurrentIndex(coda->currentIndex()+1);
+    }
 
     player->setVolume(ui->volumeSlider->value()); //Imposto il volume di base al valore del volumeSlider
     player->play();                               //Faccio partire la riproduzione
@@ -98,7 +111,7 @@ void MainWindow::on_btnRiproduci_clicked() {
         box.addButton(QMessageBox::No);
         int ret = box.exec();
 
-        if(ret == QMessageBox::AcceptRole) selezioneFile();
+        if(ret == QMessageBox::AcceptRole) selezioneFile(0);
     }
 
     if(player->isAudioAvailable()){
@@ -109,7 +122,7 @@ void MainWindow::on_btnRiproduci_clicked() {
             box.addButton(QMessageBox::No);
             int ret = box.exec();
 
-            if(ret == QMessageBox::AcceptRole) selezioneFile();
+            if(ret == QMessageBox::AcceptRole) selezioneFile(1);
         }
 
     /*else if(path.length() > 0) {
