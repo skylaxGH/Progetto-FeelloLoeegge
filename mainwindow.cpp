@@ -151,12 +151,22 @@ void MainWindow::on_positionChanged(qint64 position) {
 
     sec++;
 
+
         if (int (sec) - (min * 60) == 60) {
+
             min++;
+
             ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
         }
 
         else {
+
+            if(int (sec) - (min * 60) < 0){
+
+                min--;
+                ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
+            }
+
             ui->timeLabel->setText(QString::number(static_cast<int>(min)) + ":" + QString::number(static_cast<int>(sec) - (min * 60)));
         }
 }
