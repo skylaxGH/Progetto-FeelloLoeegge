@@ -56,6 +56,7 @@ private:
     QMediaPlayer* player = new QMediaPlayer; //Dichiaro un puntatore a QMediaPlayer per la riproduzione audio
     QString path = "";      //Dichiaro una variabile QString per il salvataggio della path del file selezionato da utente
     double min = 0;         //Dichiaro una variabile double per il conteggio dei minuti totali/di riproduzione della traccia
+    int row = 1;
     QString playlistFile = "/Playlist.txt";
 
     void selezioneFile();

@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     player->setMedia(nullptr);
 
+    ui->songName->setText("CODA DI RIPRODUZIONE");
+
     playlistFile = PROJECT_PATH + playlistFile;
 
     QFile filePlaylist(playlistFile);
@@ -69,6 +71,13 @@ void MainWindow::selezioneFile() {
     player->setVolume(ui->volumeSlider->value()); //Imposto il volume di base al valore del volumeSlider
     player->play();                               //Faccio partire la riproduzione
 
+    ui->tblPC->setRowCount(row);
+    ui->tblPC->setColumnCount(1);
+
+    ui->tblPC->setItem(row - 1, 0, new QTableWidgetItem(songName));
+
+    row++;
+
     /* Connetto tutti gli slot di segnale tra lo stream dell'audio e i vari slider/progress bar
        per aumentare/diminuire posizione/volume */
 
@@ -91,6 +100,17 @@ void MainWindow::on_btnRiproduci_clicked() {
 
         if(ret == QMessageBox::AcceptRole) selezioneFile();
     }
+
+    if(player->isAudioAvailable()){
+
+            box.setWindowTitle("Canzone già  in riproduzione");
+            box.setText("C'è¨ una canzone già  in riproduzione, vuoi metterne un altra in coda?");
+            box.addButton("Apri", QMessageBox::AcceptRole);
+            box.addButton(QMessageBox::No);
+            int ret = box.exec();
+
+            if(ret == QMessageBox::AcceptRole) selezioneFile();
+        }
 
     /*else if(path.length() > 0) {
         QMessageBox::StandardButton answer = QMessageBox::question(this, "Avviso", "C'è già un file in riproduzione, vuoi selezionarne un'altro?",
