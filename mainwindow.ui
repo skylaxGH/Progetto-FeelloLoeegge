@@ -346,9 +346,9 @@ QSlider::add-page:horizontal {
    <widget class="QLabel" name="timeLabel">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>284</x>
       <y>491</y>
-      <width>41</width>
+      <width>31</width>
       <height>16</height>
      </rect>
     </property>
@@ -1063,6 +1063,9 @@ border-bottom: 1px solid white;</string>
     <addaction name="actionPausa"/>
    </widget>
    <widget class="QMenu" name="menuPlaylist">
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
     <property name="title">
      <string>Playlist</string>
     </property>
@@ -1071,6 +1074,9 @@ border-bottom: 1px solid white;</string>
     <addaction name="actionTorna_alla_coda"/>
    </widget>
    <widget class="QMenu" name="menuCanzoni">
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
     <property name="title">
      <string>Canzoni</string>
     </property>
@@ -1146,6 +1152,11 @@ border-bottom: 1px solid white;</string>
    <property name="text">
     <string>Crea playlist</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionAggiungi_alla_playlist">
    <property name="icon">
@@ -1154,6 +1165,11 @@ border-bottom: 1px solid white;</string>
    </property>
    <property name="text">
     <string>Aggiungi alla playlist </string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionAvanti_di_uno">
@@ -1164,6 +1180,11 @@ border-bottom: 1px solid white;</string>
    <property name="text">
     <string>Avanti di uno</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionIndietro_di_uno">
    <property name="icon">
@@ -1173,10 +1194,20 @@ border-bottom: 1px solid white;</string>
    <property name="text">
     <string>Indietro di uno</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionTorna_alla_coda">
    <property name="text">
     <string>Torna alla coda</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
  </widget>

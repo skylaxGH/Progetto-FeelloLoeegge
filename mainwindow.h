@@ -54,12 +54,23 @@ private slots:
 
     void on_listaPlaylist_itemClicked(QListWidgetItem *item);
 
+    void on_actionTorna_alla_coda_triggered();
+
+    void on_btnAvanti_clicked();
+
+    void on_btnIndietro_clicked();
+
+    void on_actionAvanti_di_uno_triggered();
+
+    void on_actionIndietro_di_uno_triggered();
+
 private:
     Ui::MainWindow *ui;
     nameRequest *nRequest;  //Dichiaro un puntatore a nameRequest per chiamare la seconda finestra dalla prima
     sceltaPlaylist* sPlaylist; //Dichiaro un puntatore a sceltaPlaylist per chiamare la terza finestra dalla prima
 
     bool slider = false;    //Bool per la visibilità/non visibilità dello sliderVolume
+    bool setCoda = true;
 
     QMediaPlayer* player = new QMediaPlayer; //Dichiaro un puntatore a QMediaPlayer per la riproduzione audio
     QString path;      //Dichiaro una variabile QString per il salvataggio della path del file selezionato da utente
@@ -69,6 +80,7 @@ private:
     QString playlistFile = "/Playlist.txt";
     QMediaPlaylist *coda = new QMediaPlaylist;
     QMediaPlaylist *playlist = new QMediaPlaylist;
+    QMediaContent content;
 
     void selezioneFile(int n);
     void updateCoda();

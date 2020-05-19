@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     player->setMedia(nullptr);
 
     ui->songName->setText("CODA DI RIPRODUZIONE");
+    /*ui->btnAvanti->setVisible(false);
+    ui->btnIndietro->setVisible(false);*/
 
     playlistFile = PROJECT_PATH + playlistFile;
 
@@ -95,9 +97,11 @@ void MainWindow::selezioneFile(int n) {
 
 
 void MainWindow::updateCoda() {
-    if(player->state() == QMediaPlayer::StoppedState && coda->mediaCount() > 1) {
-        coda->setCurrentIndex(coda->currentIndex() + 1);
-        player->play();
+    if(player->state() == QMediaPlayer::StoppedState) {
+        if(coda->mediaCount() > 1) {
+            coda->setCurrentIndex(coda->currentIndex() + 1);
+            player->play();
+        }
     }
 
     else if(coda->mediaCount() == 0) {
@@ -122,7 +126,7 @@ void MainWindow::on_btnRiproduci_clicked() {
 
     else if(player->state() == QMediaPlayer::PausedState) player->play();
 
-    if(player->isAudioAvailable()){
+    if(player->isAudioAvailable()) {
 
             box.setWindowTitle("Canzone già in riproduzione");
             box.setText("C'è una canzone già in riproduzione, vuoi metterne un altra in coda?");
@@ -178,6 +182,30 @@ void MainWindow::on_btnVolume_clicked() {
     }
 
     slider = !slider;
+}
+
+void MainWindow::on_btnAvanti_clicked() {
+    if(setCoda == true) {
+        coda->setCurrentIndex(coda->currentIndex() + 1);
+        player->play();
+    }
+
+    else {
+        playlist->setCurrentIndex(playlist->currentIndex() + 1);
+        player->play();
+    }
+}
+
+void MainWindow::on_btnIndietro_clicked() {
+    if(setCoda == true) {
+        coda->setCurrentIndex(coda->currentIndex() - 1);
+        player->play();
+    }
+
+    else {
+        playlist->setCurrentIndex(playlist->currentIndex() - 1);
+        player->play();
+    }
 }
 
 void MainWindow::on_progressSlider_sliderMoved(int position) {
@@ -291,7 +319,7 @@ void MainWindow::insertSong(QString name) {
 
         if(ctr == true) {
             box.setWindowTitle("Errore");
-            box.setText("Canzone già presente nella playlist");
+            box.setText("Canzone gia presente nella playlist");
             box.exec();
         }
 
@@ -314,13 +342,11 @@ void MainWindow::insertSong(QString name) {
 }
 
 void MainWindow::on_listaPlaylist_itemClicked(QListWidgetItem *item) {
+    playlist->clear();
+    setCoda = false;
+
     ui->songName->setText(item->text());
     ui->listaTitolo->clear();
-
-    if(player->isAudioAvailable()) {
-        player->stop();
-        player->setMedia(nullptr);
-    }
 
     QString playlistxtPath, samestr = item->text();
     playlistxtPath = PROJECT_PATH + samestr + "/" + samestr + ".txt";
@@ -343,15 +369,16 @@ void MainWindow::on_listaPlaylist_itemClicked(QListWidgetItem *item) {
         songPaths.close();
     }
 
-    playlist->setCurrentIndex(1);
+    playlist->setCurrentIndex(playlist->currentIndex() + 1);
     player->setPlaylist(playlist);
+    player->setVolume(ui->volumeSlider->value());
     player->play();
 
     connect(ui->volumeSlider, SIGNAL(valueChanged(int)), player, SLOT(setVolume(int)));
     connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::on_durationChanged);
     connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::on_positionChanged);
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::updateCoda);
 }
-
 
 
 //----------------AZIONI--------------------
@@ -370,4 +397,23 @@ void MainWindow::on_actionStop_triggered() {
 
 void MainWindow::on_actionPausa_triggered() {
     MainWindow::on_btnPausa_clicked();
+}
+
+void MainWindow::on_actionTorna_alla_coda_triggered() {
+    ui->songName->setText("CODA DI RIPRODUZIONE");
+    if(player->isAudioAvailable()) {
+        player->stop();
+        player->setMedia(nullptr);
+        setCoda = true;
+
+        ui->listaTitolo->clear();
+    }
+}
+
+void MainWindow::on_actionAvanti_di_uno_triggered() {
+    MainWindow::on_btnAvanti_clicked();
+}
+
+void MainWindow::on_actionIndietro_di_uno_triggered() {
+    MainWindow::on_btnIndietro_clicked();
 }
