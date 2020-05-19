@@ -26,15 +26,18 @@ DEFINES += PROJECT_PATH=\"\\\"$${_PRO_FILE_PWD_}/\\\"\" # Definisco una costante
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    namerequest.cpp
+    namerequest.cpp \
+    sceltaplaylist.cpp
 
 HEADERS += \
     mainwindow.h \
-    namerequest.h
+    namerequest.h \
+    sceltaplaylist.h
 
 FORMS += \
     mainwindow.ui \
-    namerequest.ui
+    namerequest.ui \
+    sceltaplaylist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

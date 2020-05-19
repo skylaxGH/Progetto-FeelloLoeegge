@@ -5,6 +5,8 @@
 #include <QtMultimedia/QMediaPlayer>
 #include <QMessageBox>
 #include <namerequest.h>
+#include <sceltaplaylist.h>
+#include <QMediaPlaylist>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,6 +42,8 @@ private slots:
 
     void on_btnAggiungip_clicked();
 
+    void insertSong(QString name);
+
     void on_actionApri_un_file_triggered();
 
     void on_actionStart_triggered();
@@ -48,17 +52,25 @@ private slots:
 
     void on_actionPausa_triggered();
 
+    void on_listaPlaylist_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     nameRequest *nRequest;  //Dichiaro un puntatore a nameRequest per chiamare la seconda finestra dalla prima
+    sceltaPlaylist* sPlaylist; //Dichiaro un puntatore a sceltaPlaylist per chiamare la terza finestra dalla prima
+
     bool slider = false;    //Bool per la visibilità/non visibilità dello sliderVolume
 
     QMediaPlayer* player = new QMediaPlayer; //Dichiaro un puntatore a QMediaPlayer per la riproduzione audio
-    QString path = "";      //Dichiaro una variabile QString per il salvataggio della path del file selezionato da utente
+    QString path;      //Dichiaro una variabile QString per il salvataggio della path del file selezionato da utente
     double min = 0;         //Dichiaro una variabile double per il conteggio dei minuti totali/di riproduzione della traccia
     int row = 1;
+
     QString playlistFile = "/Playlist.txt";
+    QMediaPlaylist *coda = new QMediaPlaylist;
+    QMediaPlaylist *playlist = new QMediaPlaylist;
 
     void selezioneFile(int n);
+    void updateCoda();
 };
 #endif // MAINWINDOW_H

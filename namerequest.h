@@ -25,6 +25,8 @@ private slots:
 private:
     Ui::nameRequest *ui;
     QListWidget* list;
+
+    QString playlistFile = "/Playlist.txt";
 };
 
 #endif // NAMEREQUEST_H

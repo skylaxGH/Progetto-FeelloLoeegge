@@ -41,8 +41,8 @@
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="styleSheet">
@@ -53,24 +53,21 @@
 	font-size: 20px;
 }
 
-QListView::item:alternate {
-    background: #EEEEEE;
-}
-
 QListView::item:selected {
-    border: 1px solid #6a6ea9;
+    border: 1px solid rgb(255, 77, 0);
 }
 
 QListView::item:selected:!active {
-     background:
+     background-color: none;
+     color: white;
 }
 
 QListView::item:selected:active {
-     background:
+     background-color: rgb(255, 77, 0);
 }
 
 QListView::item:hover {
-     background:
+     background: rgb(255, 150, 0)
 }</string>
     </property>
     <property name="frameShape">
@@ -98,7 +95,7 @@ QListView::item:hover {
    <widget class="QPushButton" name="btnPausa">
     <property name="geometry">
      <rect>
-      <x>535</x>
+      <x>543</x>
       <y>520</y>
       <width>41</width>
       <height>41</height>
@@ -115,15 +112,23 @@ border: 0.6px solid white;</string>
    <widget class="QPushButton" name="btnRiproduci">
     <property name="geometry">
      <rect>
-      <x>485</x>
+      <x>493</x>
       <y>520</y>
       <width>41</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="toolTipDuration">
+     <number>1</number>
+    </property>
     <property name="styleSheet">
      <string notr="true">image: url(:/icone/icone/icons8-riproduci-60.png);
-border: 0.6px solid white;</string>
+border: 0.6px solid white;
+
+</string>
     </property>
     <property name="text">
      <string/>
@@ -132,7 +137,7 @@ border: 0.6px solid white;</string>
    <widget class="QPushButton" name="btnStop">
     <property name="geometry">
      <rect>
-      <x>435</x>
+      <x>443</x>
       <y>520</y>
       <width>41</width>
       <height>41</height>
@@ -198,7 +203,7 @@ border-right: 1.2px solid rgb(255, 77, 0);</string>
    <widget class="QPushButton" name="btnVolume">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>603</x>
       <y>530</y>
       <width>31</width>
       <height>31</height>
@@ -229,7 +234,8 @@ border: 0.6px solid white;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: white;</string>
+     <string notr="true">color: white;
+background-color: transparent;</string>
     </property>
     <property name="text">
      <string/>
@@ -279,9 +285,9 @@ QSlider::add-page:horizontal {
    <widget class="QSlider" name="volumeSlider">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>640</x>
       <y>535</y>
-      <width>160</width>
+      <width>150</width>
       <height>16</height>
      </rect>
     </property>
@@ -363,10 +369,10 @@ QSlider::add-page:horizontal {
    <widget class="QPushButton" name="btnCreaplaylist">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>520</y>
-      <width>41</width>
-      <height>41</height>
+      <x>160</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -380,10 +386,10 @@ border: 0.6px solid white;</string>
    <widget class="QPushButton" name="btnAggiungip">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>520</y>
-      <width>41</width>
-      <height>41</height>
+      <x>200</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -394,17 +400,144 @@ border: 0.6px solid white;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tblPC">
+   <widget class="QLabel" name="title">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>280</x>
       <y>70</y>
-      <width>521</width>
-      <height>411</height>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;
+background-color: transparent;</string>
+    </property>
+    <property name="text">
+     <string>Titolo</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignHCenter|Qt::AlignTop</set>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listaTitolo">
+    <property name="geometry">
+     <rect>
+      <x>286</x>
+      <y>110</y>
+      <width>441</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListView {
+	border: none;
+	color: white;
+	background-color: transparent;
+}
+
+QListView::item:selected {
+    border: 1px solid rgb(255, 77, 0);
+}
+
+QListView::item:selected:!active {
+     background-color: none;
+     color: white;
+}
+
+QListView::item:selected:active {
+     background-color: rgb(255, 77, 0);
+}
+
+QListView::item:hover {
+     background: rgb(255, 150, 0)
+}</string>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::NoSelection</enum>
+    </property>
+    <property name="uniformItemSizes">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="Line" name="linea_2">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>67</y>
+      <width>500</width>
+      <height>3</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: none;</string>
+     <string notr="true">background-color: rgb(255, 77, 0);</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="linea_3">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>485</y>
+      <width>500</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 77, 0);</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnAvanti">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>130</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/icone/icone/icons8-su.png);
+border: 0.6px solid white;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnIndietro">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>170</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/icone/icone/icons8-giu.png);
+border: 0.6px solid white;</string>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -720,6 +853,205 @@ border-bottom: 1px solid white;</string>
     <addaction name="actionApri_un_file"/>
    </widget>
    <widget class="QMenu" name="menuRiproduzione">
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="WindowText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>48</red>
+          <green>48</green>
+          <blue>48</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="NoBrush">
+         <color alpha="128">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
     <property name="styleSheet">
      <string notr="true">border: none;</string>
     </property>
@@ -730,8 +1062,25 @@ border-bottom: 1px solid white;</string>
     <addaction name="actionStop"/>
     <addaction name="actionPausa"/>
    </widget>
+   <widget class="QMenu" name="menuPlaylist">
+    <property name="title">
+     <string>Playlist</string>
+    </property>
+    <addaction name="actionCrea_playlist"/>
+    <addaction name="actionAggiungi_alla_playlist"/>
+    <addaction name="actionTorna_alla_coda"/>
+   </widget>
+   <widget class="QMenu" name="menuCanzoni">
+    <property name="title">
+     <string>Canzoni</string>
+    </property>
+    <addaction name="actionAvanti_di_uno"/>
+    <addaction name="actionIndietro_di_uno"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuRiproduzione"/>
+   <addaction name="menuPlaylist"/>
+   <addaction name="menuCanzoni"/>
   </widget>
   <action name="actionStart">
    <property name="icon">
@@ -787,6 +1136,47 @@ border-bottom: 1px solid white;</string>
     <font>
      <pointsize>12</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="actionCrea_playlist">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icone/icone/-playlist-add_90050.png</normaloff>:/icone/icone/-playlist-add_90050.png</iconset>
+   </property>
+   <property name="text">
+    <string>Crea playlist</string>
+   </property>
+  </action>
+  <action name="actionAggiungi_alla_playlist">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icone/icone/icons8-add-song-60.png</normaloff>:/icone/icone/icons8-add-song-60.png</iconset>
+   </property>
+   <property name="text">
+    <string>Aggiungi alla playlist </string>
+   </property>
+  </action>
+  <action name="actionAvanti_di_uno">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icone/icone/icons8-giu.png</normaloff>:/icone/icone/icons8-giu.png</iconset>
+   </property>
+   <property name="text">
+    <string>Avanti di uno</string>
+   </property>
+  </action>
+  <action name="actionIndietro_di_uno">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icone/icone/icons8-su.png</normaloff>:/icone/icone/icons8-su.png</iconset>
+   </property>
+   <property name="text">
+    <string>Indietro di uno</string>
+   </property>
+  </action>
+  <action name="actionTorna_alla_coda">
+   <property name="text">
+    <string>Torna alla coda</string>
    </property>
   </action>
  </widget>

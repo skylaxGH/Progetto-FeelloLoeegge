@@ -1,6 +1,10 @@
 #include "namerequest.h"
 #include "ui_namerequest.h"
+
 #include <QMessageBox>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
 
 nameRequest::nameRequest(QListWidget* __list, QWidget *parent) :
     QDialog(parent),
@@ -19,11 +23,21 @@ void nameRequest::on_buttonBox_accepted()
 {
     bool ctr = false;
 
-    for(int i = 0; i < list->count(); i++) {
-        if(ui->namePlaylist->text() == list->item(i)->text()) {
-            ctr = true;
-        }
+    QFile filePlaylist(PROJECT_PATH + playlistFile);
+    filePlaylist.open(QIODevice::ReadWrite);
+    QTextStream stream(&filePlaylist);
+
+    while (!stream.atEnd()) {
+        QString line = stream.readLine();
+
+        QFile playlistPath(line);
+        QFileInfo playlistInfo(playlistPath.fileName());
+        QString playlistName(playlistInfo.fileName());
+
+        if(ui->namePlaylist->text() == playlistName) ctr = true;
     }
+
+    filePlaylist.close();
 
     if(ctr == true || ui->namePlaylist->text() == "" || ui->namePlaylist->text().contains('.') ||
        ui->namePlaylist->text().contains('\\') || ui->namePlaylist->text().contains('/') ||

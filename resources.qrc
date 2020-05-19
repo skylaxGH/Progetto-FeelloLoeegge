@@ -7,5 +7,7 @@
         <file>icone/icons8-stop-60 (2).png</file>
         <file>icone/-playlist-add_90050.png</file>
         <file>icone/icons8-add-song-60.png</file>
+        <file>icone/icons8-su.png</file>
+        <file>icone/icons8-giu.png</file>
     </qresource>
 </RCC>
