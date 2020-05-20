@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Nome della playlist</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icone/icone/icons8-nota-musicale-60.png</normaloff>:/icone/icone/icons8-nota-musicale-60.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(10, 10, 10);</string>
   </property>
@@ -68,11 +72,14 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
+    <string notr="true">color: rgb(255, 255, 255);
+border: 1px solid rgb(255, 77, 0);</string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

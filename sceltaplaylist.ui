@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Scegli Playlist</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icone/icone/icons8-nota-musicale-60.png</normaloff>:/icone/icone/icons8-nota-musicale-60.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(10, 10, 10);
@@ -103,6 +107,8 @@ QListView::item:hover {
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

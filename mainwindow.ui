@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Player</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icone/icone/icons8-nota-musicale-60.png</normaloff>:/icone/icone/icons8-nota-musicale-60.png</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -534,6 +538,23 @@ border: 0.6px solid white;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">image: url(:/icone/icone/icons8-giu.png);
+border: 0.6px solid white;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnElimina">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>230</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/icone/icone/icons8-eliminare-60.png);
 border: 0.6px solid white;</string>
     </property>
     <property name="text">

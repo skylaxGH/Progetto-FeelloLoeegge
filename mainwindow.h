@@ -64,6 +64,12 @@ private slots:
 
     void on_actionIndietro_di_uno_triggered();
 
+    void on_actionCrea_playlist_triggered();
+
+    void on_actionAggiungi_alla_playlist_triggered();
+
+    void on_btnElimina_clicked();
+
 private:
     Ui::MainWindow *ui;
     nameRequest *nRequest;  //Dichiaro un puntatore a nameRequest per chiamare la seconda finestra dalla prima
@@ -84,5 +90,6 @@ private:
 
     void selezioneFile(int n);
     void updateCoda();
+    void change();
 };
 #endif // MAINWINDOW_H

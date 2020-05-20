@@ -9,5 +9,7 @@
         <file>icone/icons8-add-song-60.png</file>
         <file>icone/icons8-su.png</file>
         <file>icone/icons8-giu.png</file>
+        <file>icone/icons8-nota-musicale-60.png</file>
+        <file>icone/icons8-eliminare-60.png</file>
     </qresource>
 </RCC>
